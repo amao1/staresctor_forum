@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Starsector Forum - Account</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+    <!-- Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- MDB -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/mdb.min.css')}}" />
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" />
+  </head>
+
+
+<style>
+.navbar-brand {
+  color: white;
+}
+
+.nav-link {
+  color: white;
+}
+
+</style>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary bg-black" style="z-index: 1; min-height: 58.99px">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{{url_for('home')}}">Home</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              {%if session['firstName'] %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('post')}}">Post</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('postHistory')}}">Post History</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('commentHistory')}}">Comment History</a>
+              </li>
+              {%endif %}
+            </ul>
+            <ul class="navbar-nav list-inline">
+              <!-- Icons -->
+              {%if session['firstName'] %}
+              <li class="nav-item active">
+                <a class="nav-link disabled" style="color: white;">Hello  {{session['firstName']}}</a>
+              </li>
+              {%endif %}
+              <li class="nav-item active">
+                <a class="nav-link" aria-current="page" href="{{url_for('account')}}">Account</a>
+              </li>
+          </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <div  class="bg-image vh-100"
+      style="height: 500px;
+            margin-top: -58.59px;
+            overflow-y: auto  ;
+            background-image: url('https://fractalsoftworks.com/wp-content/uploads/2013/02/hh09.jpg');">
+
+      <div class="container" style="z-index: 1; ">
+        <!-- Account page navigation-->
+        <hr class="mt-0 mb-4" >
+        <div class="row" style=" margin-top: 100px;">
+            <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                    <div class="card-header">Profile Picture</div>
+                    <div class="card-body text-center">
+                        <!-- Profile picture image-->
+                        <img class="img-account-profile rounded-circle mb-2" src="{{url_for('static', filename='img/pfp.jpg')}}" alt="">
+                        <!-- Profile picture upload button-->
+                        <button style="margin-top: 20px;" class="btn btn-primary" type="button" disabled>Change Avatar</button>
+                    </div>
+                </div>
+            </div>
+              <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                    <div class="card-header">Account Details</div>
+                      <div class="card-body">
+                          <form action="{{url_for('account')}}" method="post">
+                            {{errorTop}}
+                              <!-- Form Group (username)-->
+                              <div class="form-group mb-3">
+                                  <label for="username">Username (how your name will appear to other users on the site)</label>
+                                  <input type="text" id="username" name="username" class="form-control" placeholder="{{session['username']}}" />
+                              </div>
+                              <!-- Form Row-->
+                                <div class="row gx-3 mb-3">
+                                  <!-- Form Group (first name)-->
+                                  <div class="form-group col-md-6">
+                                      <label class="small mb-1" for="firstName">First name</label>
+                                      <input class="form-control" id="firstName" name="firstName" type="text" placeholder="{{session['firstName']}}" />
+                                  </div>
+                                  <!-- Form Group (last name)-->
+                                  <div class="form-group col-md-6">
+                                      <label class="small mb-1" for="lastName">Last name</label>
+                                      <input class="form-control" id="lastName" name="lastName" type="text" placeholder="{{session['lastName']}}">
+                                  </div>
+                                </div>
+                              <!-- Form Row  -->
+                              <div class="row gx-3 mb-3">
+                                  <!-- Form Group (phone number)-->
+                                  <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="phone">Phone number</label>
+                                    <input class="form-control" id="phone" name="phone" type="tel" placeholder="{{session['phoneNumber']}}">
+                                </div>
+                                  <!-- Form Group (email address)-->
+                                  <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="registerEmail">Email address</label>
+                                    <input class="form-control" id="registerEmail" name="registerEmail" type="email" placeholder="{{session['email']}}">
+                                  </div>
+                              </div>
+                              <!-- Form Group (old password)-->
+                              {{error}}
+                              <div class="form-group mb-3">
+                                  <label class="small mb-1" for="oldPassword">Old Password</label>
+                                  <input class="form-control" id="oldPassword" name="oldPassword" type="password">
+                              </div>
+                              <!-- Form Row-->
+                              <div class="row gx-3 mb-3">
+                                  <!-- Form Group (new password)-->
+                                  <div class="form-group col-md-6">
+                                      <label class="small mb-1" for="newPassword">New Password</label>
+                                      <input class="form-control" id="newPassword" name="newPassword" type="password">
+                                  </div>
+                                  <!-- Form Group (repeat new password)-->
+                                  <div class="form-group col-md-6">
+                                      <label class="small mb-1" for="repeatNewPassword">Repeat New Password</label>
+                                      <input class="form-control" id="repeatNewPassword" name="repeatNewPassword" type="password">
+                                  </div>
+                              </div>
+                            
+                              <div class="row gx-3 mb-3">
+                                <!-- Save changes button-->
+                                <div class="col-md-6">
+                                  <button class="btn btn-primary" type="submit">Save changes</button>
+                                </div>
+                              </form>
+                                <!-- Logout Button -->
+                              <div class ="col-md-6">
+                                <form action="{{url_for('logout')}}" method="post">
+                                  <button type="submit" class="btn btn-danger float-end">Sign Out</button>
+                                </form>
+                              </div>  
+                        </div>
+                  </div>
+                </div>
+        </div>
+      </div>
+  </div>
+      <!-- Pills content -->
+
+      <script type="text/javascript" src="{{url_for('static',filename='js/mdb.min.js')}}"></script>
+
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <!-- Custom scripts -->
+      <script type="text/javascript" src="{{url_for('static',filename='js/script.js')}}"></script>
+      <!-- Pills content -->
+  </body>
+</html>
